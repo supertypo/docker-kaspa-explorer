@@ -1,11 +1,14 @@
 FROM node:18-alpine AS builder
 
 ARG REPO_DIR
+ARG TAG
 
 RUN apk --no-cache add \
   git
 
 COPY "$REPO_DIR" /build
+
+ENV REACT_APP_VERCEL_GIT_COMMIT_SHA="$TAG"
 
 RUN cd /build \
   && npm install

@@ -16,8 +16,9 @@ fi
 
 (cd "$REPO_DIR" && git pull)
 tag=$(cd "$REPO_DIR" && git log -n1 --format="%cs.%h")
+commitId=$(cd "$REPO_DIR" && git log -n1 --format="%h")
 
-docker build --pull --build-arg REPO_DIR="$REPO_DIR" -t $DOCKER_REPO:$tag "$BUILD_DIR"
+docker build --pull --build-arg REPO_DIR="$REPO_DIR" --build-arg TAG="$commitId" -t $DOCKER_REPO:$tag "$BUILD_DIR"
 docker tag $DOCKER_REPO:$tag $DOCKER_REPO:latest
 echo Tagged $DOCKER_REPO:latest
 
